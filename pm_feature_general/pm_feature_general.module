@@ -1,0 +1,17 @@
+<?php
+
+include_once('pm_feature_general.features.inc');
+
+function pm_feature_general_init(){
+  drupal_add_js(drupal_get_path('theme', 'neelambal') .'/styles/pm.js');
+  drupal_add_css(drupal_get_path('theme', 'neelambal') .'/styles/pm_views.css');
+  drupal_add_css(drupal_get_path('theme', 'neelambal') .'/styles/pm_node_tasks.css');
+}
+
+function pm_feature_general_form_alter(&$form, $form_state, $form_id) {
+  // Check that the form is a content type edit/create form
+  if (isset($form['#node']) && $form['#node']->type .'_node_form' == $form_id) {
+    // If they do not have the title permission, hide the title field
+    $form['title']['#access'] = user_access('administer node titles');
+  }
+}
